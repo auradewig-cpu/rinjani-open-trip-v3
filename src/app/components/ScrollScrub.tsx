@@ -40,9 +40,14 @@ export function ScrollScrub() {
     update();
     window.addEventListener('resize', update);
     window.addEventListener('orientationchange', update);
+
+    const observer = new ResizeObserver(update);
+    observer.observe(document.body);
+
     return () => {
       window.removeEventListener('resize', update);
       window.removeEventListener('orientationchange', update);
+      observer.disconnect();
     };
   }, []);
 
