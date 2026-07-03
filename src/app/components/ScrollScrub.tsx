@@ -41,14 +41,32 @@ export function ScrollScrub() {
     window.addEventListener('resize', update);
     window.addEventListener('orientationchange', update);
 
-    const observer = new ResizeObserver(update);
+    let resizeTimer: ReturnType<typeof setTimeout>;
+    const observer = new ResizeObserver(() => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(update, 150);
+    });
     observer.observe(document.body);
 
     return () => {
       window.removeEventListener('resize', update);
       window.removeEventListener('orientationchange', update);
+      clearTimeout(resizeTimer);
       observer.disconnect();
     };
+  }, []);
+
+  const renderRef = useRef<((time: number) => void) | null>(null);
+  useEffect(() => {
+    const handleVisibility = () => {
+      if (document.hidden) {
+        cancelAnimationFrame(rafRef.current);
+      } else if (renderRef.current) {
+        rafRef.current = requestAnimationFrame(renderRef.current);
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
+    return () => document.removeEventListener('visibilitychange', handleVisibility);
   }, []);
 
   useEffect(() => {
@@ -58,6 +76,7 @@ export function ScrollScrub() {
     if (!ctx) return;
 
     let currentFrame = 0;
+    let lastTime = 0;
 
     function resize() {
       const dpr = window.devicePixelRatio || 1;
@@ -67,7 +86,16 @@ export function ScrollScrub() {
     resize();
     window.addEventListener('resize', resize);
 
-    function render() {
+    function render(time: number) {
+      const isMobile = window.innerWidth < 768;
+      const minInterval = isMobile ? 32 : 16;
+
+      if (time - lastTime < minInterval) {
+        rafRef.current = requestAnimationFrame(render);
+        return;
+      }
+      lastTime = time;
+
       const scrollable = scrollableRef.current;
       const p = scrollable > 0
         ? Math.max(0, Math.min(1, window.scrollY / scrollable))
@@ -94,6 +122,7 @@ export function ScrollScrub() {
       }
       rafRef.current = requestAnimationFrame(render);
     }
+    renderRef.current = render;
     rafRef.current = requestAnimationFrame(render);
 
     return () => {
