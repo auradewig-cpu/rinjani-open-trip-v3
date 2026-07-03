@@ -13,6 +13,7 @@ export function ScrollScrub() {
   const frameDrawnRef = useRef(false);
   const scrollableRef = useRef(0);
   const imagesRef = useRef<HTMLImageElement[]>([]);
+  const lastDrawnFrameRef = useRef(-1);
   const [loaded, setLoaded] = useState(false);
   const [loadProgress, setLoadProgress] = useState(0);
 
@@ -77,6 +78,8 @@ export function ScrollScrub() {
 
     let currentFrame = 0;
     let lastTime = 0;
+    let idleTimer: ReturnType<typeof setTimeout>;
+    let isScrolling = false;
 
     function resize() {
       const dpr = window.devicePixelRatio || 1;
@@ -85,6 +88,12 @@ export function ScrollScrub() {
     }
     resize();
     window.addEventListener('resize', resize);
+
+    window.addEventListener('scroll', () => {
+      isScrolling = true;
+      clearTimeout(idleTimer);
+      idleTimer = setTimeout(() => { isScrolling = false; }, 150);
+    }, { passive: true });
 
     function render(time: number) {
       const isMobile = window.innerWidth < 768;
@@ -107,6 +116,12 @@ export function ScrollScrub() {
         Math.max(0, Math.round(currentFrame))
       );
 
+      if (!isScrolling && frameIndex === lastDrawnFrameRef.current) {
+        rafRef.current = requestAnimationFrame(render);
+        return;
+      }
+      lastDrawnFrameRef.current = frameIndex;
+
       const img = imagesRef.current[frameIndex];
       if (img?.complete && img.naturalWidth > 0) {
         const w = window.innerWidth;
@@ -128,6 +143,7 @@ export function ScrollScrub() {
     return () => {
       cancelAnimationFrame(rafRef.current);
       window.removeEventListener('resize', resize);
+      clearTimeout(idleTimer);
     };
   }, []);
 
