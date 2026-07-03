@@ -1,17 +1,18 @@
-import { useEffect } from "react";
+import { useEffect, lazy, Suspense } from "react";
 import { Navbar } from "./components/Navbar";
 import { HeroSection } from "./components/HeroSection";
-import { PackagesSection } from "./components/PackagesSection";
-import { WhyUsSection } from "./components/WhyUsSection";
-import { GallerySection } from "./components/GallerySection";
-import { ItinerarySection } from "./components/ItinerarySection";
-import { TestimonialsSection } from "./components/TestimonialsSection";
-import { FaqSection } from "./components/FaqSection";
-import { CtaSection } from "./components/CtaSection";
-import { Footer } from "./components/Footer";
 import { ScrollScrub } from "./components/ScrollScrub";
 import { motion } from "motion/react";
 import { MessageCircle } from "lucide-react";
+
+const PackagesSection = lazy(() => import("./components/PackagesSection").then(m => ({default: m.PackagesSection})));
+const WhyUsSection = lazy(() => import("./components/WhyUsSection").then(m => ({default: m.WhyUsSection})));
+const GallerySection = lazy(() => import("./components/GallerySection").then(m => ({default: m.GallerySection})));
+const ItinerarySection = lazy(() => import("./components/ItinerarySection").then(m => ({default: m.ItinerarySection})));
+const TestimonialsSection = lazy(() => import("./components/TestimonialsSection").then(m => ({default: m.TestimonialsSection})));
+const FaqSection = lazy(() => import("./components/FaqSection").then(m => ({default: m.FaqSection})));
+const CtaSection = lazy(() => import("./components/CtaSection").then(m => ({default: m.CtaSection})));
+const Footer = lazy(() => import("./components/Footer").then(m => ({default: m.Footer})));
 
 function FloatingWhatsApp() {
   return (
@@ -56,14 +57,16 @@ export default function App() {
       <div className="relative" style={{ zIndex: 2 }}>
         <Navbar />
         <HeroSection />
-        <PackagesSection />
-        <WhyUsSection />
-        <GallerySection />
-        <ItinerarySection />
-        <TestimonialsSection />
-        <FaqSection />
-        <CtaSection />
-        <Footer />
+        <Suspense fallback={null}>
+          <PackagesSection />
+          <WhyUsSection />
+          <GallerySection />
+          <ItinerarySection />
+          <TestimonialsSection />
+          <FaqSection />
+          <CtaSection />
+          <Footer />
+        </Suspense>
       </div>
 
       <FloatingWhatsApp />

@@ -203,6 +203,7 @@ export function TestimonialsSection() {
               {testimonials.map((_, i) => (
                 <button
                   key={i}
+                  aria-label={`Testimoni ${i + 1}`}
                   onClick={() => { setDirection(i > current ? 1 : -1); setCurrent(i); }}
                   className="transition-all duration-300 rounded-full"
                   style={{
@@ -215,6 +216,7 @@ export function TestimonialsSection() {
             </div>
             <div className="flex gap-2">
               <motion.button
+                aria-label="Testimoni sebelumnya"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={() => go(-1)}
@@ -224,6 +226,7 @@ export function TestimonialsSection() {
                 <ChevronLeft size={18} />
               </motion.button>
               <motion.button
+                aria-label="Testimoni berikutnya"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={() => go(1)}

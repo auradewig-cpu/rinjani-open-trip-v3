@@ -33,4 +33,25 @@ export default defineConfig({
 
   // File types to support raw imports. Never add .css, .tsx, or .ts files to this.
   assetsInclude: ['**/*.svg', '**/*.csv'],
+
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router'],
+          'motion': ['motion'],
+          'mui': ['@mui/material', '@mui/icons-material',
+                  '@emotion/react', '@emotion/styled'],
+          'radix': [
+            '@radix-ui/react-accordion',
+            '@radix-ui/react-dialog',
+            '@radix-ui/react-dropdown-menu',
+            '@radix-ui/react-tabs',
+            '@radix-ui/react-select',
+          ],
+          'charts': ['recharts'],
+        },
+      },
+    },
+  },
 })

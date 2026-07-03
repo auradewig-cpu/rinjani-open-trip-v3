@@ -41,10 +41,12 @@ export function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           {/* Logo */}
-          <motion.div
+          <motion.button
+            type="button"
             whileHover={{ scale: 1.05 }}
             className="flex items-center gap-2 cursor-pointer"
             onClick={() => scrollTo("#home")}
+            style={{ background: 'none', border: 'none', padding: 0 }}
           >
             <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#f59e0b] to-[#ea580c] flex items-center justify-center shadow-lg">
               <Mountain size={20} className="text-white" />
@@ -57,7 +59,7 @@ export function Navbar() {
                 {" "}OPEN TRIP
               </span>
             </div>
-          </motion.div>
+          </motion.button>
 
           {/* Desktop Links */}
           <div className="hidden md:flex items-center gap-8">
@@ -85,6 +87,8 @@ export function Navbar() {
 
           {/* Mobile Menu Button */}
           <button
+            aria-label={mobileOpen ? "Tutup menu" : "Buka menu"}
+            aria-expanded={mobileOpen}
             className="md:hidden text-white p-2"
             onClick={() => setMobileOpen(!mobileOpen)}
           >

@@ -42,7 +42,7 @@ export function HeroSection() {
     <section
       id="home"
       className="min-h-screen flex flex-col justify-center items-start px-6 pt-24 pb-16"
-      style={{ position: "relative" }}
+      style={{ position: "relative", backgroundColor: "#0a0a0a" }}
     >
       {/* Floating blobs decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">

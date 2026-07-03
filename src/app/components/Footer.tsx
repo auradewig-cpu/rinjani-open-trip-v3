@@ -10,18 +10,13 @@ const quickLinks = [
 ];
 
 const socials = [
-  { icon: Instagram, label: "Instagram", href: "#" },
-  { icon: Facebook, label: "Facebook", href: "#" },
-  { icon: Youtube, label: "YouTube", href: "#" },
-  { icon: MessageCircle, label: "WhatsApp", href: "#" },
+  { icon: Instagram, label: "Instagram", href: "https://instagram.com/rinjani.opentrip" },
+  { icon: Facebook, label: "Facebook", href: "https://facebook.com" },
+  { icon: Youtube, label: "YouTube", href: "https://youtube.com" },
+  { icon: MessageCircle, label: "WhatsApp", href: "https://wa.me/6281234567890" },
 ];
 
 export function Footer() {
-  const scrollTo = (href: string) => {
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
     <footer className="relative">
       {/* Top wave */}
@@ -60,6 +55,9 @@ export function Footer() {
                 <motion.a
                   key={s.label}
                   href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${s.label} Rinjani Open Trip`}
                   whileHover={{ scale: 1.15, y: -2 }}
                   className="w-9 h-9 rounded-xl flex items-center justify-center text-white/50 hover:text-white transition-colors"
                   style={{ backgroundColor: "rgba(255,255,255,0.06)" }}
@@ -81,13 +79,13 @@ export function Footer() {
             <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.label}>
-                  <button
-                    onClick={() => scrollTo(link.href)}
-                    className="text-white/40 hover:text-white/80 text-sm transition-colors text-left"
-                    style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+                  <a
+                    href={link.href}
+                    className="text-white/40 hover:text-white/80 text-sm transition-colors"
+                    style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", textDecoration: 'none' }}
                   >
                     {link.label}
-                  </button>
+                  </a>
                 </li>
               ))}
             </ul>

@@ -110,12 +110,13 @@ export function GallerySection() {
       {/* Lightbox */}
       <AnimatePresence>
         {selected && (
-          <motion.div
+          <motion.button
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelected(null)}
             className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black/80 backdrop-blur-md"
+            style={{ border: 'none', width: '100%', height: '100%', cursor: 'pointer' }}
           >
             <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
@@ -132,13 +133,14 @@ export function GallerySection() {
                 </p>
               </div>
               <button
+                aria-label="Tutup galeri"
                 onClick={() => setSelected(null)}
                 className="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center text-white hover:bg-black/70 transition-colors"
               >
                 <X size={20} />
               </button>
             </motion.div>
-          </motion.div>
+          </motion.button>
         )}
       </AnimatePresence>
     </section>
