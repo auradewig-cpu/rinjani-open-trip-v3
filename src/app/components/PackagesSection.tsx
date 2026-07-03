@@ -105,6 +105,8 @@ function PackageCard({ pkg, index }: { pkg: typeof packages[0]; index: number })
         <motion.img
           src={pkg.image}
           alt={pkg.name}
+          loading="lazy"
+          decoding="async"
           animate={{ scale: hovered ? 1.08 : 1 }}
           transition={{ duration: 0.5 }}
           className="w-full h-full object-cover"

@@ -91,6 +91,8 @@ export function GallerySection() {
               <img
                 src={item.url}
                 alt={item.caption}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -126,7 +128,7 @@ export function GallerySection() {
               onClick={(e) => e.stopPropagation()}
               className="relative max-w-4xl w-full rounded-3xl overflow-hidden"
             >
-              <img src={selected.url} alt={selected.caption} className="w-full h-auto max-h-[80vh] object-cover" />
+              <img src={selected.url} alt={selected.caption} loading="lazy" decoding="async" className="w-full h-auto max-h-[80vh] object-cover" />
               <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent">
                 <p className="text-white text-base" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 500 }}>
                   {selected.caption}

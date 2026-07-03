@@ -2,7 +2,7 @@ import { useEffect, lazy, Suspense } from "react";
 import { Navbar } from "./components/Navbar";
 import { HeroSection } from "./components/HeroSection";
 import { ScrollScrub } from "./components/ScrollScrub";
-import { motion } from "motion/react";
+import { motion, MotionConfig } from "motion/react";
 import { MessageCircle } from "lucide-react";
 
 const PackagesSection = lazy(() => import("./components/PackagesSection").then(m => ({default: m.PackagesSection})));
@@ -49,6 +49,11 @@ export default function App() {
     document.body.style.fontFamily = "'Plus Jakarta Sans', sans-serif";
   }, []);
 
+  const prefersReducedMotion =
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isMobile = window.innerWidth < 768;
+  const disableMotion = isMobile || prefersReducedMotion;
+
   return (
     <div className="min-h-screen" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
       <ScrollScrub />
@@ -57,16 +62,18 @@ export default function App() {
       <div className="relative" style={{ zIndex: 2 }}>
         <Navbar />
         <HeroSection />
-        <Suspense fallback={null}>
-          <PackagesSection />
-          <WhyUsSection />
-          <GallerySection />
-          <ItinerarySection />
-          <TestimonialsSection />
-          <FaqSection />
-          <CtaSection />
-          <Footer />
-        </Suspense>
+        <MotionConfig reducedMotion={disableMotion ? "always" : "never"}>
+          <Suspense fallback={null}>
+            <PackagesSection />
+            <WhyUsSection />
+            <GallerySection />
+            <ItinerarySection />
+            <TestimonialsSection />
+            <FaqSection />
+            <CtaSection />
+            <Footer />
+          </Suspense>
+        </MotionConfig>
       </div>
 
       <FloatingWhatsApp />
