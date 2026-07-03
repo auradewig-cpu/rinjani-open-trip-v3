@@ -76,7 +76,7 @@ export function WhyUsSection() {
             Bukan Sekadar Jalan-Jalan
           </h2>
           <p
-            className="text-white/50 max-w-lg mx-auto text-base"
+            className="text-white/70 max-w-lg mx-auto text-base"
             style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
           >
             Kami hadir untuk memastikan setiap langkah di Rinjani menjadi petualangan yang aman, berkesan, dan penuh makna
@@ -118,7 +118,7 @@ export function WhyUsSection() {
                   {feature.title}
                 </h3>
                 <p
-                  className="text-white/50 text-sm leading-relaxed"
+                  className="text-white/70 text-sm leading-relaxed"
                   style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
                 >
                   {feature.description}

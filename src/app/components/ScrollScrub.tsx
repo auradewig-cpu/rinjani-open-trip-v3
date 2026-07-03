@@ -14,6 +14,9 @@ export function ScrollScrub() {
   const scrollableRef = useRef(0);
   const imagesRef = useRef<HTMLImageElement[]>([]);
   const lastDrawnFrameRef = useRef(-1);
+  const isScrollingRef = useRef(false);
+  const scrollTimerRef = useRef<ReturnType<typeof setTimeout>>();
+  const rafActiveRef = useRef(false);
   const [loaded, setLoaded] = useState(false);
   const [loadProgress, setLoadProgress] = useState(0);
 
@@ -57,19 +60,6 @@ export function ScrollScrub() {
     };
   }, []);
 
-  const renderRef = useRef<((time: number) => void) | null>(null);
-  useEffect(() => {
-    const handleVisibility = () => {
-      if (document.hidden) {
-        cancelAnimationFrame(rafRef.current);
-      } else if (renderRef.current) {
-        rafRef.current = requestAnimationFrame(renderRef.current);
-      }
-    };
-    document.addEventListener('visibilitychange', handleVisibility);
-    return () => document.removeEventListener('visibilitychange', handleVisibility);
-  }, []);
-
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -78,27 +68,23 @@ export function ScrollScrub() {
 
     let currentFrame = 0;
     let lastTime = 0;
-    let idleTimer: ReturnType<typeof setTimeout>;
-    let isScrolling = false;
 
-    function resize() {
-      const dpr = window.devicePixelRatio || 1;
-      canvas!.width = window.innerWidth * dpr;
-      canvas!.height = window.innerHeight * dpr;
+    function startRAF() {
+      if (rafActiveRef.current) return;
+      rafActiveRef.current = true;
+      rafRef.current = requestAnimationFrame(render);
     }
-    resize();
-    window.addEventListener('resize', resize);
 
-    window.addEventListener('scroll', () => {
-      isScrolling = true;
-      clearTimeout(idleTimer);
-      idleTimer = setTimeout(() => { isScrolling = false; }, 150);
-    }, { passive: true });
+    function stopRAF() {
+      rafActiveRef.current = false;
+      cancelAnimationFrame(rafRef.current);
+    }
 
     function render(time: number) {
+      if (!rafActiveRef.current) return;
+
       const isMobile = window.innerWidth < 768;
       const minInterval = isMobile ? 32 : 16;
-
       if (time - lastTime < minInterval) {
         rafRef.current = requestAnimationFrame(render);
         return;
@@ -111,39 +97,71 @@ export function ScrollScrub() {
         : 0;
       const targetFrame = Math.round(p * (TOTAL_FRAMES - 1));
       currentFrame += (targetFrame - currentFrame) * 0.1;
-      const frameIndex = Math.min(
-        TOTAL_FRAMES - 1,
-        Math.max(0, Math.round(currentFrame))
-      );
+      const frameIndex = Math.min(TOTAL_FRAMES - 1, Math.max(0, Math.round(currentFrame)));
 
-      if (!isScrolling && frameIndex === lastDrawnFrameRef.current) {
-        rafRef.current = requestAnimationFrame(render);
-        return;
-      }
-      lastDrawnFrameRef.current = frameIndex;
+      if (frameIndex !== lastDrawnFrameRef.current) {
+        const img = imagesRef.current[frameIndex];
+        if (img?.complete && img.naturalWidth > 0) {
+          const w = window.innerWidth;
+          const h = window.innerHeight;
+          const dpr = window.devicePixelRatio || 1;
+          if (canvas!.width !== w * dpr || canvas!.height !== h * dpr) {
+            canvas!.width = w * dpr;
+            canvas!.height = h * dpr;
+          }
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+          ctx.drawImage(img, 0, 0, w, h);
+          lastDrawnFrameRef.current = frameIndex;
 
-      const img = imagesRef.current[frameIndex];
-      if (img?.complete && img.naturalWidth > 0) {
-        const w = window.innerWidth;
-        const h = window.innerHeight;
-        const dpr = window.devicePixelRatio || 1;
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        ctx.drawImage(img, 0, 0, w, h);
-
-        if (!frameDrawnRef.current) {
-          frameDrawnRef.current = true;
-          if (imgRef.current) imgRef.current.style.opacity = '0';
+          if (!frameDrawnRef.current) {
+            frameDrawnRef.current = true;
+            if (imgRef.current) imgRef.current.style.opacity = '0';
+          }
         }
       }
+
+      const diff = Math.abs(targetFrame - currentFrame);
+      if (!isScrollingRef.current && diff < 0.1) {
+        stopRAF();
+        return;
+      }
+
       rafRef.current = requestAnimationFrame(render);
     }
-    renderRef.current = render;
-    rafRef.current = requestAnimationFrame(render);
+
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = window.innerWidth * dpr;
+    canvas.height = window.innerHeight * dpr;
+
+    function onResize() {
+      const dpr = window.devicePixelRatio || 1;
+      canvas!.width = window.innerWidth * dpr;
+      canvas!.height = window.innerHeight * dpr;
+    }
+    window.addEventListener('resize', onResize);
+
+    window.addEventListener('scroll', () => {
+      isScrollingRef.current = true;
+      startRAF();
+      clearTimeout(scrollTimerRef.current);
+      scrollTimerRef.current = setTimeout(() => {
+        isScrollingRef.current = false;
+      }, 150);
+    }, { passive: true });
+
+    const handleVisibility = () => {
+      if (document.hidden) stopRAF();
+      else startRAF();
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
+
+    startRAF();
 
     return () => {
-      cancelAnimationFrame(rafRef.current);
-      window.removeEventListener('resize', resize);
-      clearTimeout(idleTimer);
+      stopRAF();
+      window.removeEventListener('resize', onResize);
+      clearTimeout(scrollTimerRef.current);
+      document.removeEventListener('visibilitychange', handleVisibility);
     };
   }, []);
 

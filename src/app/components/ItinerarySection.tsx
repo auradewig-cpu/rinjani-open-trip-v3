@@ -77,6 +77,7 @@ function DayCard({ item, index }: { item: typeof itinerary[0]; index: number }) 
         <div className="flex-1 rounded-3xl overflow-hidden" style={{ backgroundColor: "#0d1f10", border: "1px solid rgba(255,255,255,0.05)" }}>
           <button
             onClick={() => setOpen(!open)}
+            aria-expanded={open}
             className="w-full flex items-center justify-between p-5"
           >
             <div>
@@ -134,7 +135,7 @@ function DayCard({ item, index }: { item: typeof itinerary[0]; index: number }) 
                       <div className="flex items-start gap-2">
                         <MapPin size={12} className="text-white/30 mt-1 flex-shrink-0" />
                         <p
-                          className="text-white/60 text-sm"
+                          className="text-white/80 text-sm"
                           style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
                         >
                           {event.desc}
@@ -184,7 +185,7 @@ export function ItinerarySection() {
             Itinerary Lengkap
           </h2>
           <p
-            className="text-white/50 max-w-lg mx-auto text-base"
+            className="text-white/70 max-w-lg mx-auto text-base"
             style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
           >
             Setiap momen terencana dengan baik, agar petualanganmu berjalan lancar dan tak terlupakan

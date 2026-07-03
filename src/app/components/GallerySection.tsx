@@ -5,37 +5,37 @@ import { X, ZoomIn, ImageIcon } from "lucide-react";
 const galleryItems = [
   {
     id: 1,
-    url: "https://images.unsplash.com/photo-1698267703889-06c41f9acba5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800",
+    url: "https://images.unsplash.com/photo-1698267703889-06c41f9acba5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=60&w=400",
     caption: "Danau Segara Anak dari ketinggian",
     span: "col-span-2 row-span-2",
   },
   {
     id: 2,
-    url: "https://images.unsplash.com/photo-1586022045497-31fcf76fa6cc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600",
+    url: "https://images.unsplash.com/photo-1586022045497-31fcf76fa6cc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=60&w=400",
     caption: "Perjalanan menuju puncak",
     span: "col-span-1 row-span-1",
   },
   {
     id: 3,
-    url: "https://images.unsplash.com/photo-1782676395854-7053c3d6a830?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600",
+    url: "https://images.unsplash.com/photo-1782676395854-7053c3d6a830?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=60&w=400",
     caption: "Bayangan kawah saat sunrise",
     span: "col-span-1 row-span-1",
   },
   {
     id: 4,
-    url: "https://images.unsplash.com/photo-1770065799075-26584088c482?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600",
+    url: "https://images.unsplash.com/photo-1770065799075-26584088c482?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=60&w=400",
     caption: "Danau kawah biru memukau",
     span: "col-span-1 row-span-2",
   },
   {
     id: 5,
-    url: "https://images.unsplash.com/photo-1682686579688-c2ba945eda0e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600",
+    url: "https://images.unsplash.com/photo-1682686579688-c2ba945eda0e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=60&w=400",
     caption: "Pendaki di puncak kebanggaan",
     span: "col-span-1 row-span-1",
   },
   {
     id: 6,
-    url: "https://images.unsplash.com/photo-1558883493-8b86ff880fec?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600",
+    url: "https://images.unsplash.com/photo-1558883493-8b86ff880fec?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=60&w=400",
     caption: "Golden hour di Rinjani",
     span: "col-span-1 row-span-1",
   },
@@ -113,6 +113,7 @@ export function GallerySection() {
       <AnimatePresence>
         {selected && (
           <motion.button
+            aria-label="Tutup galeri"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

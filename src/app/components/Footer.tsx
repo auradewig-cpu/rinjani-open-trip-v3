@@ -44,7 +44,7 @@ export function Footer() {
               </div>
             </div>
             <p
-              className="text-white/40 text-sm leading-relaxed mb-6 max-w-xs"
+              className="text-white/60 text-sm leading-relaxed mb-6 max-w-xs"
               style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
             >
               Operator open trip Gunung Rinjani terpercaya sejak 2017. Mengantarkan ribuan pendaki meraih puncak impian mereka dengan aman dan berkesan.
@@ -81,7 +81,7 @@ export function Footer() {
                 <li key={link.label}>
                   <a
                     href={link.href}
-                    className="text-white/40 hover:text-white/80 text-sm transition-colors"
+                    className="text-white/60 hover:text-white/80 text-sm transition-colors"
                     style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", textDecoration: 'none' }}
                   >
                     {link.label}
@@ -100,19 +100,19 @@ export function Footer() {
               Kontak
             </h4>
             <ul className="space-y-3">
-              <li className="flex items-start gap-2 text-white/40 text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <li className="flex items-start gap-2 text-white/60 text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 <MapPin size={14} className="text-[#f59e0b] mt-0.5 flex-shrink-0" />
                 <span>Jl. Rinjani No. 1, Sembalun, Lombok Timur, NTB</span>
               </li>
-              <li className="flex items-center gap-2 text-white/40 text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <li className="flex items-center gap-2 text-white/60 text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 <Phone size={14} className="text-[#f59e0b] flex-shrink-0" />
                 <span>+62 812-3456-7890</span>
               </li>
-              <li className="flex items-center gap-2 text-white/40 text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <li className="flex items-center gap-2 text-white/60 text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 <Mail size={14} className="text-[#f59e0b] flex-shrink-0" />
                 <span>info@rinjani-opentrip.id</span>
               </li>
-              <li className="flex items-center gap-2 text-white/40 text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <li className="flex items-center gap-2 text-white/60 text-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 <Instagram size={14} className="text-[#f59e0b] flex-shrink-0" />
                 <span>@rinjani.opentrip</span>
               </li>
@@ -123,13 +123,13 @@ export function Footer() {
         {/* Bottom */}
         <div className="border-t border-white/5 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <p
-            className="text-white/25 text-sm"
+            className="text-white/50 text-sm"
             style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
           >
             © 2025 Rinjani Open Trip. All rights reserved.
           </p>
           <p
-            className="text-white/25 text-sm"
+            className="text-white/50 text-sm"
             style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
           >
             Izin Usaha TNGR No. 001/TNGR/2025 • Member PHRI

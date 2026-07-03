@@ -26,7 +26,7 @@ const packages = [
       "Simaksi resmi",
     ],
     description: "Trek menuju Danau Segara Anak yang legendaris. Cocok untuk pemula yang ingin merasakan keindahan kaldera Rinjani.",
-    image: "https://images.unsplash.com/photo-1698799330469-e53f68a91c08?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600",
+    image: "https://images.unsplash.com/photo-1698799330469-e53f68a91c08?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=60&w=400",
   },
   {
     id: 2,
@@ -51,7 +51,7 @@ const packages = [
       "Sertifikat pendakian",
     ],
     description: "Pengalaman lengkap: Danau Segara Anak + Summit 3.726 mdpl. Saksikan sunrise paling epic dari puncak Rinjani!",
-    image: "https://images.unsplash.com/photo-1782676395854-7053c3d6a830?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600",
+    image: "https://images.unsplash.com/photo-1782676395854-7053c3d6a830?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=60&w=400",
   },
   {
     id: 3,
@@ -76,7 +76,7 @@ const packages = [
       "Foto profesional drone",
     ],
     description: "Rute terpanjang nan menakjubkan, menyebrangi seluruh kaldera, berendam di hot spring, dan menikmati puncak 2x!",
-    image: "https://images.unsplash.com/photo-1770065799075-26584088c482?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600",
+    image: "https://images.unsplash.com/photo-1770065799075-26584088c482?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=60&w=400",
   },
 ];
 
@@ -176,14 +176,14 @@ function PackageCard({ pkg, index }: { pkg: typeof packages[0]; index: number })
             >
               {pkg.price}
             </div>
-            <div className="text-white/40 text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            <div className="text-white/60 text-xs" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               {pkg.priceNote}
             </div>
           </div>
         </div>
 
         <p
-          className="text-white/60 text-sm leading-relaxed mb-5"
+          className="text-white/70 text-sm leading-relaxed mb-5"
           style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
         >
           {pkg.description}
@@ -195,7 +195,7 @@ function PackageCard({ pkg, index }: { pkg: typeof packages[0]; index: number })
             <div key={item} className="flex items-center gap-1.5">
               <CheckCircle2 size={13} style={{ color: pkg.accent, flexShrink: 0 }} />
               <span
-                className="text-white/70 text-xs leading-tight"
+                className="text-white/80 text-xs leading-tight"
                 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
               >
                 {item}
@@ -257,7 +257,7 @@ export function PackagesSection() {
             Pilih Petualanganmu
           </h2>
           <p
-            className="text-white/50 max-w-lg mx-auto text-base leading-relaxed"
+            className="text-white/70 max-w-lg mx-auto text-base leading-relaxed"
             style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
           >
             Setiap paket dirancang dengan cermat untuk memberikan pengalaman terbaik di Gunung Rinjani
